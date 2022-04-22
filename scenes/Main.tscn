@@ -44,13 +44,10 @@ margin_top = 36.0
 margin_right = 1004.0
 margin_bottom = 40.0
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer"]
+[node name="Elements" type="ScrollContainer" parent="MarginContainer/VBoxContainer"]
 margin_top = 44.0
 margin_right = 1004.0
-margin_bottom = 44.0
-
-[node name="Elements" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer"]
-margin_right = 1004.0
+margin_bottom = 580.0
 size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource( 1 )
-Tree = null

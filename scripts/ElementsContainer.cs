@@ -2,61 +2,77 @@ using System;
 using Godot;
 using SchemaEditor.scripts;
 
-public class ElementsContainer : VBoxContainer
+public class ElementsContainer : Control
 {
+	private PackedScene StringEditor { get; set; }
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		this.StringEditor = ResourceLoader.Load<PackedScene>("res://scenes/StringValueEditor.tscn");
 
+		this.SetItem(SchemaDataType.String);
 	}
 
-	public void AddItem(SchemaDataType dataType)
+	public void SetItem(SchemaDataType dataType)
 	{
 		switch (dataType)
 		{
 			case SchemaDataType.Boolean:
-				this.AddBoolean();
+				this.SetBoolean();
 				break;
 
 			case SchemaDataType.String:
-				this.AddString();
+				this.SetString();
 				break;
 
 			case SchemaDataType.Number:
-				this.AddNumber();
+				this.SetNumber();
 				break;
 
 			case SchemaDataType.Array:
-				this.AddArray();
+				this.SetArray();
 				break;
 
 			case SchemaDataType.Object:
-				this.AddObject();
+				this.SetObject();
 				break;
 		}
 	}
 
-	private void AddBoolean()
+	private void ClearEditors()
+	{
+		foreach (Node child in this.GetChildren())
+		{
+			this.RemoveChild(child);
+		}
+	}
+
+	private void SetBoolean()
 	{
 		throw new NotImplementedException();
 	}
 
-	private void AddString()
+	private void SetString()
+	{
+		this.ClearEditors();
+		Control editorNode = this.StringEditor.Instance<Control>();
+		editorNode.SizeFlagsHorizontal = (int)SizeFlags.ExpandFill;
+		editorNode.SizeFlagsVertical = (int)SizeFlags.ExpandFill;
+		this.AddChild(editorNode);
+	}
+
+	private void SetNumber()
 	{
 		throw new NotImplementedException();
 	}
 
-	private void AddNumber()
+	private void SetArray()
 	{
 		throw new NotImplementedException();
 	}
 
-	private void AddArray()
-	{
-		throw new NotImplementedException();
-	}
-
-	private void AddObject()
+	private void SetObject()
 	{
 		throw new NotImplementedException();
 	}

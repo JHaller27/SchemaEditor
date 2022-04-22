@@ -8,7 +8,6 @@ public class ElementsContainer : Control, IValueEditor
 	private static readonly PackedScene StringEditor = ResourceLoader.Load<PackedScene>("res://scenes/StringValueEditor.tscn");
 	private static readonly PackedScene NumberEditor = ResourceLoader.Load<PackedScene>("res://scenes/NumberValueEditor.tscn");
 	private static readonly PackedScene ArrayEditor = ResourceLoader.Load<PackedScene>("res://scenes/ArrayValueEditor.tscn");
-	public static readonly PackedScene SubcontainerEditor = ResourceLoader.Load<PackedScene>("res://scenes/SubcontainerValueEditor.tscn");
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -16,29 +15,33 @@ public class ElementsContainer : Control, IValueEditor
 		this.SetSchema(SchemaDataType.Array);
 	}
 
-	public void SetSchema(SchemaDataType dataType)
+	public IValueEditor SetSchema(SchemaDataType dataType)
 	{
 		switch (dataType)
 		{
 			case SchemaDataType.Boolean:
-				this.SetBoolean();
-				break;
+				return this.SetBoolean();
 
 			case SchemaDataType.String:
-				this.SetString();
-				break;
+				return this.SetString();
 
 			case SchemaDataType.Number:
-				this.SetNumber();
-				break;
+				return this.SetNumber();
 
 			case SchemaDataType.Array:
-				this.SetArray(SchemaDataType.String);  // TODO Set itemsType dynamically
-				break;
+				return this.SetArray(SchemaDataType.String);  // TODO Set itemsType dynamically
 
 			case SchemaDataType.Object:
-				this.SetObject(SchemaDataType.String);  // TODO Set valuesType dynamically
-				break;
+				return this.SetObject(SchemaDataType.String);  // TODO Set valuesType dynamically
+
+			case SchemaDataType.Integer:
+				throw new NotImplementedException();
+
+			case SchemaDataType.Null:
+				throw new NotImplementedException();
+
+			default:
+				throw new ArgumentOutOfRangeException(nameof(dataType), dataType, null);
 		}
 	}
 
@@ -46,7 +49,9 @@ public class ElementsContainer : Control, IValueEditor
 
 	public object GetValue() => this.ChildEditor.GetValue();
 
-	protected  void ClearEditors()
+	private IValueEditor ChildEditor => this.GetChild<IValueEditor>(0);
+
+	protected virtual void ClearEditors()
 	{
 		foreach (Node child in this.GetChildren())
 		{
@@ -54,7 +59,40 @@ public class ElementsContainer : Control, IValueEditor
 		}
 	}
 
-	protected  void SetArray(SchemaDataType itemsType)
+	protected IValueEditor SetBoolean()
+	{
+		throw new NotImplementedException();
+	}
+
+	protected IValueEditor SetString()
+	{
+		this.ClearEditors();
+
+		StringValueEditor editorNode = StringEditor.Instance<StringValueEditor>();
+
+		editorNode.SizeFlagsHorizontal = (int)SizeFlags.ExpandFill;
+		editorNode.SizeFlagsVertical = (int)SizeFlags.ExpandFill;
+
+		this.AddChild(editorNode);
+
+		return editorNode;
+	}
+
+	protected IValueEditor SetNumber()
+	{
+		this.ClearEditors();
+
+		NumberValueEditor editorNode = NumberEditor.Instance<NumberValueEditor>();
+
+		editorNode.SizeFlagsHorizontal = (int)SizeFlags.ExpandFill;
+		editorNode.SizeFlagsVertical = (int)SizeFlags.ExpandFill;
+
+		this.AddChild(editorNode);
+
+		return editorNode;
+	}
+
+	protected IValueEditor SetArray(SchemaDataType itemsType)
 	{
 		this.ClearEditors();
 
@@ -66,41 +104,12 @@ public class ElementsContainer : Control, IValueEditor
 		editorNode.SizeFlagsVertical = (int)SizeFlags.ExpandFill;
 
 		this.AddChild(editorNode);
+
+		return editorNode;
 	}
 
-	protected  void SetObject(SchemaDataType valuesType)
+	protected IValueEditor SetObject(SchemaDataType valuesType)
 	{
 		throw new NotImplementedException();
-	}
-
-	private IValueEditor ChildEditor => this.GetChild<IValueEditor>(0);
-
-	protected void SetBoolean()
-	{
-		throw new NotImplementedException();
-	}
-
-	protected void SetString()
-	{
-		this.ClearEditors();
-
-		StringValueEditor editorNode = StringEditor.Instance<StringValueEditor>();
-
-		editorNode.SizeFlagsHorizontal = (int)SizeFlags.ExpandFill;
-		editorNode.SizeFlagsVertical = (int)SizeFlags.ExpandFill;
-
-		this.AddChild(editorNode);
-	}
-
-	protected void SetNumber()
-	{
-		this.ClearEditors();
-
-		NumberValueEditor editorNode = NumberEditor.Instance<NumberValueEditor>();
-
-		editorNode.SizeFlagsHorizontal = (int)SizeFlags.ExpandFill;
-		editorNode.SizeFlagsVertical = (int)SizeFlags.ExpandFill;
-
-		this.AddChild(editorNode);
 	}
 }

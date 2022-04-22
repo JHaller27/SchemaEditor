@@ -4,7 +4,7 @@ using SchemaEditor;
 using SchemaEditor.scripts;
 using GDArray = Godot.Collections.Array;
 
-public class ArrayValueEditor : Control, IValueEditor
+public class ArrayValueEditor : ElementsContainer
 {
 	public SchemaDataType ItemsType { private get; set; }
 	private Node AddItemButton { get; set; }
@@ -22,7 +22,7 @@ public class ArrayValueEditor : Control, IValueEditor
 		GDArray valueList = (GDArray)value;
 		foreach (object item in valueList)
 		{
-			ElementsContainer subcontainerValueEditor = this.AddItem();
+			IValueEditor subcontainerValueEditor = this.AddItem();
 			subcontainerValueEditor.SetValue(item);
 		}
 	}
@@ -37,27 +37,17 @@ public class ArrayValueEditor : Control, IValueEditor
 		return outValue;
 	}
 
-	private void ClearEditors()
+	protected override void ClearEditors()
 	{
-		foreach (Node child in this.GetChildren())
-		{
-			if (child != this.AddItemButton)
-			{
-				this.RemoveChild(child);
-			}
-		}
+		// nop
 	}
 
-	private ElementsContainer AddItem()
+	private IValueEditor AddItem()
 	{
-		ElementsContainer subEditorNode = ElementsContainer.SubcontainerEditor.Instance<ElementsContainer>();
-		subEditorNode.SetSchema(this.ItemsType);
-
-		this.AddChild(subEditorNode);
-
+		IValueEditor childEditor = this.SetSchema(this.ItemsType);
 		this.MoveChild(this.AddItemButton, this.GetChildCount()-1);
 
-		return subEditorNode;
+		return childEditor;
 	}
 
 	private void _on_AddItemButton_pressed() => this.AddItem();

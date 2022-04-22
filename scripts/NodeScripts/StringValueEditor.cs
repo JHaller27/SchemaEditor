@@ -1,4 +1,5 @@
-using Godot;using SchemaEditor.Interfaces;
+using Godot;
+using SchemaEditor;
 
 public class StringValueEditor : Control, IValueEditor
 {

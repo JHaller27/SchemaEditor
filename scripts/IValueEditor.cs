@@ -1,4 +1,4 @@
-namespace SchemaEditor.Interfaces
+namespace SchemaEditor
 {
 	public interface IValueEditor
 	{

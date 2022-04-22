@@ -1,6 +1,6 @@
 using System;
 using Godot;
-using SchemaEditor.Interfaces;
+using SchemaEditor;
 using SchemaEditor.scripts;
 
 public class ElementsContainer : Control

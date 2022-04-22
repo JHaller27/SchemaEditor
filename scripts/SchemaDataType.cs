@@ -5,7 +5,9 @@ namespace SchemaEditor.scripts
 		Boolean,
 		String,
 		Number,
+		Integer,
 		Array,
 		Object,
+		Null,
 	}
 }

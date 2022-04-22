@@ -48,10 +48,10 @@ public class ElementsContainer : ElementsContainerBase
 	{
 		this.ClearEditors();
 
-		ElementsSubcontainerValueEditor editorNode = SubcontainerEditor.Instance<ElementsSubcontainerValueEditor>();
+		ArrayValueEditor editorNode = ArrayEditor.Instance<ArrayValueEditor>();
 		this.ValueEditor = editorNode;
 
-		editorNode.SetSchema(itemsType);
+		editorNode.ItemsType = itemsType;
 
 		editorNode.SizeFlagsHorizontal = (int)SizeFlags.ExpandFill;
 		editorNode.SizeFlagsVertical = (int)SizeFlags.ExpandFill;

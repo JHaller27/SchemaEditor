@@ -7,7 +7,8 @@ public abstract class ElementsContainerBase : Control
 {
 	private static readonly PackedScene StringEditor = ResourceLoader.Load<PackedScene>("res://scenes/StringValueEditor.tscn");
 	private static readonly PackedScene NumberEditor = ResourceLoader.Load<PackedScene>("res://scenes/NumberValueEditor.tscn");
-	protected static readonly PackedScene SubcontainerEditor = ResourceLoader.Load<PackedScene>("res://scenes/SubcontainerValueEditor.tscn");
+	protected static readonly PackedScene ArrayEditor = ResourceLoader.Load<PackedScene>("res://scenes/ArrayValueEditor.tscn");
+	public static readonly PackedScene SubcontainerEditor = ResourceLoader.Load<PackedScene>("res://scenes/SubcontainerValueEditor.tscn");
 
 	protected IValueEditor ValueEditor { get; set; }
 

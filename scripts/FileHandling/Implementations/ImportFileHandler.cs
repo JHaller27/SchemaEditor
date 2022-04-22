@@ -5,9 +5,9 @@ namespace SchemaEditor.FileHandling.Implementations
 {
 	public class ImportFileHandler : IFileHandler
 	{
-		private IContext Context { get; }
+		private IValueEditor Context { get; }
 
-		public ImportFileHandler(IContext context)
+		public ImportFileHandler(IValueEditor context)
 		{
 			this.Context = context;
 		}
@@ -16,7 +16,7 @@ namespace SchemaEditor.FileHandling.Implementations
 		{
 			string text = File.ReadAllText(path);
 			JSONParseResult jsonParseResult = JSON.Parse(text);
-			this.Context.ImportData(jsonParseResult.Result);
+			this.Context.SetValue(jsonParseResult.Result);
 		}
 	}
 }

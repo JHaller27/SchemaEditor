@@ -5,16 +5,16 @@ namespace SchemaEditor.FileHandling.Implementations
 {
 	public class ExportFileHandler : IFileHandler
 	{
-		private IContext Context { get; }
+		private IValueEditor Context { get; }
 
-		public ExportFileHandler(IContext context)
+		public ExportFileHandler(IValueEditor context)
 		{
 			this.Context = context;
 		}
 
 		public void Handle(string path)
 		{
-			object obj = this.Context.ExportData();
+			object obj = this.Context.GetValue();
 			string json = JSON.Print(obj);
 			File.WriteAllText(path, json);
 		}

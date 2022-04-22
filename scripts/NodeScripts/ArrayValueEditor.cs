@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using Godot;
 using SchemaEditor;
@@ -23,7 +22,7 @@ public class ArrayValueEditor : Control, IValueEditor
 		GDArray valueList = (GDArray)value;
 		foreach (object item in valueList)
 		{
-			ElementsSubcontainerValueEditor subcontainerValueEditor = this.AddItem();
+			ElementsContainer subcontainerValueEditor = this.AddItem();
 			subcontainerValueEditor.SetValue(item);
 		}
 	}
@@ -49,9 +48,9 @@ public class ArrayValueEditor : Control, IValueEditor
 		}
 	}
 
-	private ElementsSubcontainerValueEditor AddItem()
+	private ElementsContainer AddItem()
 	{
-		ElementsSubcontainerValueEditor subEditorNode = ElementsContainerBase.SubcontainerEditor.Instance<ElementsSubcontainerValueEditor>();
+		ElementsContainer subEditorNode = ElementsContainer.SubcontainerEditor.Instance<ElementsContainer>();
 		subEditorNode.SetSchema(this.ItemsType);
 
 		this.AddChild(subEditorNode);

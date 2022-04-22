@@ -1,9 +1,10 @@
 using Godot;
+using SchemaEditor;
 using SchemaEditor.FileHandling;
 using SchemaEditor.FileHandling.Implementations;
 using Environment = System.Environment;
 
-public class Main : Control, IContext
+public class Main : Control, IValueEditor
 {
 	private ImportFileHandler ImportFileHandler { get; set; }
 	private ExportFileHandler ExportFileHandler { get; set; }
@@ -22,12 +23,12 @@ public class Main : Control, IContext
 		this.ImportFileHandler = new(this);
 		this.ExportFileHandler = new(this);
 
-		this.ElementsContainer = this.GetNode("MarginContainer").GetNode("VBoxContainer").GetNode<ElementsContainer>("Elements");
+		this.ElementsContainer = this.GetNode("MarginContainer").GetNode("VBoxContainer").GetNode("Elements").GetNode<ElementsContainer>("SubcontainerValueEditor");
 	}
 
-	public void ImportData(object data) => this.ElementsContainer.ImportData(data);
+	public void SetValue(object data) => this.ElementsContainer.SetValue(data);
 
-	public object ExportData() => this.ElementsContainer.ExportData();
+	public object GetValue() => this.ElementsContainer.GetValue();
 
 	private void _on_ImportButton_pressed()
 	{

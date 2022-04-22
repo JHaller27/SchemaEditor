@@ -6,12 +6,14 @@ using SchemaEditor.scripts;
 public class ElementsContainer : Control
 {
 	private static readonly PackedScene StringEditor = ResourceLoader.Load<PackedScene>("res://scenes/StringValueEditor.tscn");
+	private static readonly PackedScene NumberEditor = ResourceLoader.Load<PackedScene>("res://scenes/NumberValueEditor.tscn");
+
 	private IValueEditor ValueEditor { get; set; }
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		this.SetSchema(SchemaDataType.String);
+		this.SetSchema(SchemaDataType.Number);
 	}
 
 	public void SetSchema(SchemaDataType dataType)
@@ -67,7 +69,14 @@ public class ElementsContainer : Control
 
 	private void SetNumber()
 	{
-		throw new NotImplementedException();
+		this.ClearEditors();
+		NumberValueEditor editorNode = NumberEditor.Instance<NumberValueEditor>();
+		this.ValueEditor = editorNode;
+
+		editorNode.SizeFlagsHorizontal = (int)SizeFlags.ExpandFill;
+		editorNode.SizeFlagsVertical = (int)SizeFlags.ExpandFill;
+
+		this.AddChild(editorNode);
 	}
 
 	private void SetArray()

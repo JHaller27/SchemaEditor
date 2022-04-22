@@ -15,11 +15,8 @@ public class StringValueEditor : Control, IValueEditor
 		this.EditNode.Text = (string)value;
 	}
 
-	public string Stringify()
+	public object GetValue()
 	{
-		string text = this.EditNode.Text;
-		text = text.Replace("\"", "\\\"");
-
-		return $"\"{text}\"";
+		return this.EditNode.Text;
 	}
 }

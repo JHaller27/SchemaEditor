@@ -6,7 +6,6 @@ using SchemaEditor.scripts;
 public class ElementsContainer : Control
 {
 	private static readonly PackedScene StringEditor = ResourceLoader.Load<PackedScene>("res://scenes/StringValueEditor.tscn");
-
 	private IValueEditor ValueEditor { get; set; }
 
 	// Called when the node enters the scene tree for the first time.
@@ -83,11 +82,10 @@ public class ElementsContainer : Control
 
 	private void PrintValue()
 	{
-		Console.WriteLine(this.ValueEditor.Stringify());
+		Console.WriteLine(this.ValueEditor.GetValue());
 	}
 
-	private void _on_ExportButton_pressed()
-	{
-		this.PrintValue();
-	}
+	public void ImportData(object data) => this.ValueEditor.SetValue(data);
+
+	public object ExportData() => this.ValueEditor.GetValue();
 }

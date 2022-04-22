@@ -4,7 +4,7 @@ using SchemaEditor;
 using SchemaEditor.scripts;
 using GDArray = Godot.Collections.Array;
 
-public class ArrayValueEditor : ElementsContainer
+public class ArrayValueEditor : ElementsContainerBase
 {
 	public SchemaDataType ItemsType { private get; set; }
 	private Node AddItemButton { get; set; }
@@ -15,10 +15,8 @@ public class ArrayValueEditor : ElementsContainer
 		this.AddItemButton = this.GetChild<Node>(0);
 	}
 
-	public void SetValue(object value)
+	public override void SetValue(object value)
 	{
-		this.ClearEditors();
-
 		GDArray valueList = (GDArray)value;
 		foreach (object item in valueList)
 		{
@@ -27,7 +25,7 @@ public class ArrayValueEditor : ElementsContainer
 		}
 	}
 
-	public object GetValue()
+	public override object GetValue()
 	{
 		object[] outValue = this.GetChildren()
 			.OfType<IValueEditor>()
@@ -35,11 +33,6 @@ public class ArrayValueEditor : ElementsContainer
 			.ToArray();
 
 		return outValue;
-	}
-
-	protected override void ClearEditors()
-	{
-		// nop
 	}
 
 	private IValueEditor AddItem()

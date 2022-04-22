@@ -37,7 +37,7 @@ public class ArrayValueEditor : ElementsContainerBase
 
 	private IValueEditor AddItem()
 	{
-		IValueEditor childEditor = this.SetSchema(this.ItemsType);
+		IValueEditor childEditor = base.AddItem(this.ItemsType);
 		this.MoveChild(this.AddItemButton, this.GetChildCount()-1);
 
 		return childEditor;

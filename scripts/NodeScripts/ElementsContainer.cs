@@ -8,7 +8,7 @@ public class ElementsContainer : ElementsContainerBase
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		this.SetSchema(SchemaDataType.Array);
+		this.AddItem(SchemaDataType.Array);
 	}
 
 	public override void SetValue(object value) => this.ChildEditor.SetValue(value);
@@ -17,13 +17,13 @@ public class ElementsContainer : ElementsContainerBase
 
 	private IValueEditor ChildEditor => this.GetChild<IValueEditor>(0);
 
-	protected override IValueEditor SetSchema(SchemaDataType dataType)
+	protected override IValueEditor AddItem(SchemaDataType dataType)
 	{
 		this.ClearEditors();
-		return base.SetSchema(dataType);
+		return base.AddItem(dataType);
 	}
 
-	private  void ClearEditors()
+	private void ClearEditors()
 	{
 		foreach (Node child in this.GetChildren())
 		{

@@ -12,7 +12,7 @@ public abstract class ElementsContainerBase : Control, IValueEditor
 	public abstract void SetValue(object value);
 	public abstract object GetValue();
 
-	protected virtual IValueEditor SetSchema(SchemaDataType dataType)
+	protected virtual IValueEditor AddItem(SchemaDataType dataType)
 	{
 		switch (dataType)
 		{

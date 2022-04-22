@@ -38,14 +38,9 @@ public class ElementsSubcontainerValueEditor : ElementsContainerBase, IValueEdit
 
 	protected override void ClearEditors()
 	{
-		for (int i = 0; i < this.GetChildCount()-1; i++)
+		foreach (Node child in this.GetChildren())
 		{
-			Node child = this.GetChild<Node>(i);
-
-			if (child is not Button)
-			{
-				this.RemoveChild(child);
-			}
+			this.RemoveChild(child);
 		}
 	}
 
@@ -59,13 +54,9 @@ public class ElementsSubcontainerValueEditor : ElementsContainerBase, IValueEdit
 		throw new NotImplementedException();
 	}
 
-	public void SetValue(object value)
-	{
-		throw new NotImplementedException();
-	}
+	private IValueEditor ChildEditor => this.GetChild<IValueEditor>(0);
 
-	public object GetValue()
-	{
-		throw new NotImplementedException();
-	}
+	public void SetValue(object value) => this.ChildEditor.SetValue(value);
+
+	public object GetValue() => this.ChildEditor.GetValue();
 }

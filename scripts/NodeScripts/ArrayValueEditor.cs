@@ -1,9 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using SchemaEditor;
 using SchemaEditor.scripts;
+using GDArray = Godot.Collections.Array;
 
 public class ArrayValueEditor : Control, IValueEditor
 {
@@ -20,7 +20,7 @@ public class ArrayValueEditor : Control, IValueEditor
 	{
 		this.ClearEditors();
 
-		Array valueList = (Array)value;
+		GDArray valueList = (GDArray)value;
 		foreach (object item in valueList)
 		{
 			ElementsSubcontainerValueEditor subcontainerValueEditor = this.AddItem();
@@ -32,7 +32,7 @@ public class ArrayValueEditor : Control, IValueEditor
 	{
 		object[] outValue = this.GetChildren()
 			.OfType<IValueEditor>()
-			.Cast<object>()
+			.Select(ve => ve.GetValue())
 			.ToArray();
 
 		return outValue;

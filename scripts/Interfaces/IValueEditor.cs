@@ -1,8 +1,8 @@
 namespace SchemaEditor.Interfaces
 {
-	public interface IValueEditor<T>
+	public interface IValueEditor
 	{
-		void SetValue(T value);
-		T GetValue();
+		void SetValue(object value);
+		string Stringify();
 	}
 }

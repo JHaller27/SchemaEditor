@@ -1,20 +1,21 @@
 using System;
 using Godot;
+using SchemaEditor.Interfaces;
 using SchemaEditor.scripts;
 
 public class ElementsContainer : Control
 {
-	private PackedScene StringEditor { get; set; }
+	private static readonly PackedScene StringEditor = ResourceLoader.Load<PackedScene>("res://scenes/StringValueEditor.tscn");
+
+	private IValueEditor ValueEditor { get; set; }
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		this.StringEditor = ResourceLoader.Load<PackedScene>("res://scenes/StringValueEditor.tscn");
-
-		this.SetItem(SchemaDataType.String);
+		this.SetSchema(SchemaDataType.String);
 	}
 
-	public void SetItem(SchemaDataType dataType)
+	public void SetSchema(SchemaDataType dataType)
 	{
 		switch (dataType)
 		{
@@ -56,9 +57,12 @@ public class ElementsContainer : Control
 	private void SetString()
 	{
 		this.ClearEditors();
-		Control editorNode = this.StringEditor.Instance<Control>();
+		StringValueEditor editorNode = StringEditor.Instance<StringValueEditor>();
+		this.ValueEditor = editorNode;
+
 		editorNode.SizeFlagsHorizontal = (int)SizeFlags.ExpandFill;
 		editorNode.SizeFlagsVertical = (int)SizeFlags.ExpandFill;
+
 		this.AddChild(editorNode);
 	}
 
@@ -75,5 +79,15 @@ public class ElementsContainer : Control
 	private void SetObject()
 	{
 		throw new NotImplementedException();
+	}
+
+	private void PrintValue()
+	{
+		Console.WriteLine(this.ValueEditor.Stringify());
+	}
+
+	private void _on_ExportButton_pressed()
+	{
+		this.PrintValue();
 	}
 }

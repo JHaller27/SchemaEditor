@@ -1,6 +1,6 @@
 using Godot;using SchemaEditor.Interfaces;
 
-public class StringValueEditor : Control, IValueEditor<string>
+public class StringValueEditor : Control, IValueEditor
 {
 	private LineEdit EditNode { get; set; }
 
@@ -10,13 +10,16 @@ public class StringValueEditor : Control, IValueEditor<string>
 		this.EditNode = this.GetChild<LineEdit>(0);
 	}
 
-	public void SetValue(string value)
+	public void SetValue(object value)
 	{
-		this.EditNode.Text = value;
+		this.EditNode.Text = (string)value;
 	}
 
-	public string GetValue()
+	public string Stringify()
 	{
-		throw new System.NotImplementedException();
+		string text = this.EditNode.Text;
+		text = text.Replace("\"", "\\\"");
+
+		return $"\"{text}\"";
 	}
 }

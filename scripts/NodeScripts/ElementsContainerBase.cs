@@ -1,9 +1,10 @@
 using System;
 using Godot;
 using SchemaEditor;
+using SchemaEditor.SchemaModel;
 using SchemaEditor.scripts;
 
-public abstract class ElementsContainerBase : Control, IValueEditorNode
+public abstract class ElementsContainerBase : Control, IValueEditorNode, ISchemaEditor
 {
 	private static readonly PackedScene StringEditor = ResourceLoader.Load<PackedScene>("res://scenes/StringValueEditor.tscn");
 	private static readonly PackedScene NumberEditor = ResourceLoader.Load<PackedScene>("res://scenes/NumberValueEditor.tscn");
@@ -12,6 +13,17 @@ public abstract class ElementsContainerBase : Control, IValueEditorNode
 	public abstract void SetValue(object value);
 	public abstract object GetValue();
 	public abstract Control GetControlNode();
+
+	public void ArrangeSchema(object schema)
+	{
+		Schema schemaModel = new(schema);
+		this.CreateNewItem(schemaModel.TypeEnum);
+	}
+
+	public object ExportSchema()
+	{
+		throw new NotImplementedException();
+	}
 
 	protected virtual IValueEditorNode CreateNewItem(SchemaDataType dataType)
 	{

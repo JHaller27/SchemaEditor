@@ -46,7 +46,7 @@ public class ArrayValueEditor : ElementsContainerBase
 
 		itemEditor.SetChildEditor(base.CreateNewItem(this.ItemsSchema));
 
-		this.AddChild(itemEditor.GetControlNode());  // TODO Stuff into a container with a remove button
+		this.AddChild(itemEditor.GetControlNode());
 
 		this.MoveChild(this.AddItemButton, this.GetChildCount()-1);
 

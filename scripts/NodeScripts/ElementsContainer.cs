@@ -1,6 +1,6 @@
 using Godot;
 using SchemaEditor;
-using SchemaEditor.scripts;
+using SchemaEditor.SchemaModel;
 
 public class ElementsContainer : ElementsContainerBase
 {

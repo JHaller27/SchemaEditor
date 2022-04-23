@@ -1,6 +1,5 @@
 using System;
 using Godot.Collections;
-using SchemaEditor.scripts;
 
 namespace SchemaEditor.SchemaModel
 {

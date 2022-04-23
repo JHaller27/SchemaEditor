@@ -2,7 +2,6 @@ using System;
 using Godot;
 using SchemaEditor;
 using SchemaEditor.SchemaModel;
-using SchemaEditor.scripts;
 
 public abstract class ElementsContainerBase : Control, IValueEditorNode, ISchemaEditor
 {

@@ -1,7 +1,7 @@
 using System.Linq;
 using Godot;
 using SchemaEditor;
-using SchemaEditor.scripts;
+using SchemaEditor.SchemaModel;
 using GDArray = Godot.Collections.Array;
 
 public class ArrayValueEditor : ElementsContainerBase

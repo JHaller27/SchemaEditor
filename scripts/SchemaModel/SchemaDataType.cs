@@ -1,4 +1,4 @@
-namespace SchemaEditor.scripts
+namespace SchemaEditor.SchemaModel
 {
 	public enum SchemaDataType
 	{

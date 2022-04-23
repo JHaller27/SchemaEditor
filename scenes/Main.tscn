@@ -129,6 +129,7 @@ margin_right = 193.0
 margin_bottom = 179.0
 resizable = true
 access = 2
+filters = PoolStringArray( "*.json ; JSON files" )
 current_dir = "/home/james/Documents/godot/SchemaEditor"
 current_path = "/home/james/Documents/godot/SchemaEditor/"
 

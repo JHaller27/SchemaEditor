@@ -35,9 +35,13 @@ public class ArrayValueEditor : ElementsContainerBase
 		return outValue;
 	}
 
-	private IValueEditor AddItem()
+	public override Control GetControlNode() => this;
+
+	private IValueEditorNode AddItem()
 	{
-		IValueEditor childEditor = base.AddItem(this.ItemsType);
+		IValueEditorNode childEditor = base.CreateNewItem(this.ItemsType);
+		this.AddChild(childEditor.GetControlNode());  // TODO Stuff into a container with a remove button
+
 		this.MoveChild(this.AddItemButton, this.GetChildCount()-1);
 
 		return childEditor;

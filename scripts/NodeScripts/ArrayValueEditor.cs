@@ -6,6 +6,8 @@ using GDArray = Godot.Collections.Array;
 
 public class ArrayValueEditor : ElementsContainerBase
 {
+	private static readonly PackedScene ItemEditor = ResourceLoader.Load<PackedScene>("res://scenes/ArrayItemValueEditor.tscn");
+
 	public SchemaDataType ItemsType { private get; set; }
 	private Node AddItemButton { get; set; }
 
@@ -39,13 +41,22 @@ public class ArrayValueEditor : ElementsContainerBase
 
 	private IValueEditorNode AddItem()
 	{
-		IValueEditorNode childEditor = base.CreateNewItem(this.ItemsType);
-		this.AddChild(childEditor.GetControlNode());  // TODO Stuff into a container with a remove button
+		ArrayItemValueEditor itemEditor = ItemEditor.Instance<ArrayItemValueEditor>();
+		itemEditor.Connect(nameof(ArrayItemValueEditor.RemoveTriggered), this, nameof(_on_RemoveItem_triggered));
+
+		itemEditor.SetChildEditor(base.CreateNewItem(this.ItemsType));
+
+		this.AddChild(itemEditor.GetControlNode());  // TODO Stuff into a container with a remove button
 
 		this.MoveChild(this.AddItemButton, this.GetChildCount()-1);
 
-		return childEditor;
+		return itemEditor;
 	}
 
 	private void _on_AddItemButton_pressed() => this.AddItem();
+
+	private void _on_RemoveItem_triggered(Node source)
+	{
+		this.RemoveChild(source);
+	}
 }

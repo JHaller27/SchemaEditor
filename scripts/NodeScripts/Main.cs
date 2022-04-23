@@ -31,7 +31,7 @@ public class Main : Control, IValueEditor, ISchemaEditor
 		this.ImportSchemaFileHandler = new(this);
 		this.ExportSchemaFileHandler = new(this);
 
-		this.ElementsContainer = this.GetNode("MarginContainer").GetNode("VBoxContainer").GetNode("Elements").GetNode<ElementsContainer>("SubcontainerValueEditor");
+		this.ElementsContainer = this.GetNode("MarginContainer").GetNode("VBoxContainer").GetNode("Elements").GetNode<ElementsContainer>("ElementsContainerEditor");
 		this.HttpRequest = this.GetNode<HTTPRequest>("HTTPRequest");
 	}
 

@@ -39,7 +39,7 @@ public class ArrayValueEditor : ElementsContainerBase
 
 	public override Control GetControlNode() => this;
 
-	private IValueEditorNode AddItem()
+	private IValueEditor AddItem()
 	{
 		ArrayItemValueEditor itemEditor = ItemEditor.Instance<ArrayItemValueEditor>();
 		itemEditor.Connect(nameof(ArrayItemValueEditor.RemoveTriggered), this, nameof(_on_RemoveItem_triggered));

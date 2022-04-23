@@ -7,7 +7,6 @@ public class ElementsContainer : ElementsContainerBase
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		this.CreateNewItem(SchemaDataType.Array);
 	}
 
 	public override void SetValue(object value) => this.ChildEditor.SetValue(value);
@@ -16,10 +15,10 @@ public class ElementsContainer : ElementsContainerBase
 
 	private IValueEditor ChildEditor => this.GetChild<IValueEditor>(0);
 
-	protected override IValueEditorNode CreateNewItem(SchemaDataType dataType)
+	protected override IValueEditorNode CreateNewItem(Schema schema)
 	{
 		this.ClearEditors();
-		IValueEditorNode editorNode = base.CreateNewItem(dataType);
+		IValueEditorNode editorNode = base.CreateNewItem(schema);
 
 		this.AddChild(editorNode.GetControlNode());
 

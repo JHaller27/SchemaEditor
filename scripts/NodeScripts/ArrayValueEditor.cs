@@ -8,7 +8,7 @@ public class ArrayValueEditor : ElementsContainerBase
 {
 	private static readonly PackedScene ItemEditor = ResourceLoader.Load<PackedScene>("res://scenes/ArrayItemValueEditor.tscn");
 
-	public SchemaDataType ItemsType { private get; set; }
+	public Schema ItemsSchema { private get; set; }
 	private Node AddItemButton { get; set; }
 
 	// Called when the node enters the scene tree for the first time.
@@ -44,7 +44,7 @@ public class ArrayValueEditor : ElementsContainerBase
 		ArrayItemValueEditor itemEditor = ItemEditor.Instance<ArrayItemValueEditor>();
 		itemEditor.Connect(nameof(ArrayItemValueEditor.RemoveTriggered), this, nameof(_on_RemoveItem_triggered));
 
-		itemEditor.SetChildEditor(base.CreateNewItem(this.ItemsType));
+		itemEditor.SetChildEditor(base.CreateNewItem(this.ItemsSchema));
 
 		this.AddChild(itemEditor.GetControlNode());  // TODO Stuff into a container with a remove button
 

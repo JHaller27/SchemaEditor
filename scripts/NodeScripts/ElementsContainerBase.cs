@@ -16,7 +16,7 @@ public abstract class ElementsContainerBase : Control, IValueEditorNode, ISchema
 	public void ArrangeSchema(object schema)
 	{
 		Schema schemaModel = new(schema);
-		this.CreateNewItem(schemaModel.TypeEnum);
+		this.CreateNewItem(schemaModel);
 	}
 
 	public object ExportSchema()
@@ -24,9 +24,9 @@ public abstract class ElementsContainerBase : Control, IValueEditorNode, ISchema
 		throw new NotImplementedException();
 	}
 
-	protected virtual IValueEditorNode CreateNewItem(SchemaDataType dataType)
+	protected virtual IValueEditorNode CreateNewItem(Schema schema)
 	{
-		switch (dataType)
+		switch (schema.TypeEnum)
 		{
 			case SchemaDataType.Boolean:
 				return this.SetBoolean();
@@ -38,7 +38,7 @@ public abstract class ElementsContainerBase : Control, IValueEditorNode, ISchema
 				return this.SetNumber();
 
 			case SchemaDataType.Array:
-				return this.SetArray(SchemaDataType.String);  // TODO Set itemsType dynamically
+				return this.SetArray(schema.Items);
 
 			case SchemaDataType.Object:
 				return this.SetObject(SchemaDataType.String);  // TODO Set valuesType dynamically
@@ -50,7 +50,7 @@ public abstract class ElementsContainerBase : Control, IValueEditorNode, ISchema
 				throw new NotImplementedException();
 
 			default:
-				throw new ArgumentOutOfRangeException(nameof(dataType), dataType, null);
+				throw new ArgumentOutOfRangeException(nameof(schema), schema, null);
 		}
 	}
 
@@ -79,11 +79,11 @@ public abstract class ElementsContainerBase : Control, IValueEditorNode, ISchema
 		return editorNode;
 	}
 
-	private IValueEditorNode SetArray(SchemaDataType itemsType)
+	private IValueEditorNode SetArray(Schema itemsSchema)
 	{
 		ArrayValueEditor editorNode = ArrayEditor.Instance<ArrayValueEditor>();
 
-		editorNode.ItemsType = itemsType;
+		editorNode.ItemsSchema = itemsSchema;
 
 		editorNode.SizeFlagsHorizontal = (int)SizeFlags.ExpandFill;
 		editorNode.SizeFlagsVertical = (int)SizeFlags.ExpandFill;

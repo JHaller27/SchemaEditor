@@ -10,9 +10,15 @@ namespace SchemaEditor.SchemaModel
 			Dictionary jsonDict = (Dictionary)jsonResult;
 
 			this.Type = jsonDict["type"] as string;
+
+			if (this.TypeEnum == SchemaDataType.Array)
+			{
+				this.Items = new(jsonDict["items"]);
+			}
 		}
 
 		public string Type { get; set; }
+		public Schema Items { get; set; }
 
 		public SchemaDataType TypeEnum => this.Type.ToLower() switch
 		{

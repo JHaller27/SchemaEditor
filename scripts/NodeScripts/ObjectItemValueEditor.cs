@@ -14,8 +14,15 @@ public class ObjectItemValueEditor : HBoxContainer, IValueEditorNode
 	public void SetChildEditor(IValueEditorNode child)
 	{
 		this.ChildValueEditor = child;
-		this.RemoveChild(this.GetChild(2));
-		this.AddChild(child.GetControlNode());
+
+		Control oldChild = this.GetChild<Control>(2);
+		Control newChild = child.GetControlNode();
+
+		float stretchRatio = oldChild.SizeFlagsStretchRatio;
+		newChild.SizeFlagsStretchRatio = stretchRatio;
+
+		this.RemoveChild(oldChild);
+		this.AddChild(newChild);
 	}
 
 	[Signal]

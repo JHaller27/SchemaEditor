@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Text;
 using Godot;
 using SchemaEditor;
@@ -24,7 +25,7 @@ public class Main : Control, IValueEditor, ISchemaEditor
 	{
 		this.UrlDialog = this.GetNode<UrlDialog>("UrlDialog");
 		this.FileDialog = this.GetNode<FileDialog>("FileDialog");
-		this.FileDialog.CurrentDir = Environment.GetEnvironmentVariable("HOME");
+		this.FileDialog.CurrentDir = GetHomePath();
 
 		this.ImportFileHandler = new(this);
 		this.ExportFileHandler = new(this);
@@ -95,5 +96,14 @@ public class Main : Control, IValueEditor, ISchemaEditor
 		if (json.Error != Error.Ok) return;
 
 		this.ArrangeSchema(json.Result);
+	}
+
+	private static string GetHomePath() => CoalesceEnvVar("HOME", "USERPROFILE");
+
+	private static string CoalesceEnvVar(params string[] keys)
+	{
+		return keys
+			.Select(Environment.GetEnvironmentVariable)
+			.FirstOrDefault(val => !string.IsNullOrEmpty(val));
 	}
 }

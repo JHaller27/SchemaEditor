@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Godot;
 using SchemaEditor;
 using SchemaEditor.SchemaModel;
@@ -42,7 +43,7 @@ public abstract class ElementsContainerBase : Control, IValueEditorNode, ISchema
 				return this.SetArray(schema.Items);
 
 			case SchemaDataType.Object:
-				return this.SetObject(schema.Items);
+				return this.SetObject(schema.Properties);
 
 			case SchemaDataType.Integer:
 				throw new NotImplementedException();
@@ -92,11 +93,11 @@ public abstract class ElementsContainerBase : Control, IValueEditorNode, ISchema
 		return editorNode;
 	}
 
-	private IValueEditorNode SetObject(Schema valuesSchema)
+	private IValueEditorNode SetObject(IDictionary<string, Schema> properties)
 	{
 		ObjectValueEditor editorNode = ObjectEditor.Instance<ObjectValueEditor>();
 
-		editorNode.ItemsSchema = valuesSchema;
+		editorNode.SetProperties(properties);
 
 		editorNode.SizeFlagsHorizontal = (int)SizeFlags.ExpandFill;
 		editorNode.SizeFlagsVertical = (int)SizeFlags.ExpandFill;

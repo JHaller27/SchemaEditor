@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Godot;
 using SchemaEditor;
 
@@ -5,14 +6,26 @@ public class ObjectItemValueEditor : HBoxContainer, IValueEditorNode
 {
 	private IValueEditorNode ChildValueEditor { get; set; }
 
-	public void SetValue(object value) => this.ChildValueEditor.SetValue(value);
+	private string KeyText
+	{
+		get => this.GetNode<LineEdit>("KeyLineEdit").Text;
+		set => this.GetNode<LineEdit>("KeyLineEdit").Text = value;
+	}
 
-	public object GetValue() => this.ChildValueEditor.GetValue();
+	public void SetValue(object value)
+	{
+		KeyValuePair<string, object> kvp = (KeyValuePair<string, object>)value;
+		this.KeyText = kvp.Key;
+		this.ChildValueEditor.SetValue(kvp.Value);
+	}
+
+	public object GetValue() => new KeyValuePair<string, object>(this.KeyText, this.ChildValueEditor.GetValue());
 
 	public Control GetControlNode() => this;
 
-	public void SetChildEditor(IValueEditorNode child)
+	public void SetChildEditor(string key, IValueEditorNode child)
 	{
+		this.KeyText = key;
 		this.ChildValueEditor = child;
 
 		Control oldChild = this.GetChild<Control>(2);

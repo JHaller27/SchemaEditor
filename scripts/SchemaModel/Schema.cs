@@ -1,5 +1,7 @@
 using System;
-using Godot.Collections;
+using System.Collections;
+using System.Collections.Generic;
+using GDC = Godot.Collections;
 
 namespace SchemaEditor.SchemaModel
 {
@@ -7,18 +9,28 @@ namespace SchemaEditor.SchemaModel
 	{
 		public Schema(object jsonResult)
 		{
-			Dictionary jsonDict = (Dictionary)jsonResult;
+			GDC.Dictionary jsonDict = (GDC.Dictionary)jsonResult;
 
 			this.Type = jsonDict["type"] as string;
 
-			if (this.TypeEnum is SchemaDataType.Array or SchemaDataType.Object)
+			if (this.TypeEnum == SchemaDataType.Array)
 			{
 				this.Items = new(jsonDict["items"]);
+			}
+			else if (this.TypeEnum == SchemaDataType.Object)
+			{
+				this.Properties = new();
+				GDC.Dictionary properties = (GDC.Dictionary)jsonDict["properties"];
+				foreach (DictionaryEntry kvp in properties)
+				{
+					this.Properties[(string)kvp.Key] = new(kvp.Value);
+				}
 			}
 		}
 
 		public string Type { get; set; }
-		public Schema Items { get; set; }
+		public Schema Items { get; }
+		public Dictionary<string, Schema> Properties { get; }
 
 		public SchemaDataType TypeEnum => this.Type.ToLower() switch
 		{

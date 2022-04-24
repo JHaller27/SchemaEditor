@@ -153,4 +153,5 @@ rect_min_size = Vector2( 400, 140 )
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Header/ValueControlsContainer/ImportButton" to="." method="_on_ImportButton_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Header/ValueControlsContainer/ExportButton" to="." method="_on_ExportButton_pressed"]
 [connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]
+[connection signal="UrlSelected" from="UrlDialog" to="." method="_on_UrlDialog_UrlSelected"]
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]

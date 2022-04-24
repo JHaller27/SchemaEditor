@@ -1,7 +1,9 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using Godot.Collections;
 using SchemaEditor;
 using SchemaEditor.SchemaModel;
 
@@ -9,7 +11,7 @@ public class ObjectValueEditor : ElementsContainerBase
 {
 	private static readonly PackedScene ItemEditor = ResourceLoader.Load<PackedScene>("res://scenes/ObjectItemValueEditor.tscn");
 
-	private Dictionary<string, IValueEditor> PropertiesMap { get; } = new();
+	private System.Collections.Generic.Dictionary<string, IValueEditor> PropertiesMap { get; } = new();
 	private Node AddItemButton { get; set; }
 
 	// Called when the node enters the scene tree for the first time.
@@ -29,11 +31,11 @@ public class ObjectValueEditor : ElementsContainerBase
 
 	public override void SetValue(object value)
 	{
-		Dictionary<string, object> valueList = (Dictionary<string, object>)value;
-		foreach (KeyValuePair<string, object> kvp in valueList)
+		Dictionary valueList = (Dictionary)value;
+		foreach (DictionaryEntry entry in valueList)
 		{
-			IValueEditor subcontainerValueEditor = this.PropertiesMap[kvp.Key];
-			subcontainerValueEditor.SetValue(kvp);
+			IValueEditor subcontainerValueEditor = this.PropertiesMap[(string)entry.Key];
+			subcontainerValueEditor.SetValue(entry);
 		}
 	}
 

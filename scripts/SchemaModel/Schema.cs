@@ -11,7 +11,7 @@ namespace SchemaEditor.SchemaModel
 
 			this.Type = jsonDict["type"] as string;
 
-			if (this.TypeEnum == SchemaDataType.Array)
+			if (this.TypeEnum is SchemaDataType.Array or SchemaDataType.Object)
 			{
 				this.Items = new(jsonDict["items"]);
 			}

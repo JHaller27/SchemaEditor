@@ -8,6 +8,7 @@ public abstract class ElementsContainerBase : Control, IValueEditorNode, ISchema
 	private static readonly PackedScene StringEditor = ResourceLoader.Load<PackedScene>("res://scenes/StringValueEditor.tscn");
 	private static readonly PackedScene NumberEditor = ResourceLoader.Load<PackedScene>("res://scenes/NumberValueEditor.tscn");
 	private static readonly PackedScene ArrayEditor = ResourceLoader.Load<PackedScene>("res://scenes/ArrayValueEditor.tscn");
+	private static readonly PackedScene ObjectEditor = ResourceLoader.Load<PackedScene>("res://scenes/ObjectValueEditor.tscn");
 
 	public abstract void SetValue(object value);
 	public abstract object GetValue();
@@ -41,7 +42,7 @@ public abstract class ElementsContainerBase : Control, IValueEditorNode, ISchema
 				return this.SetArray(schema.Items);
 
 			case SchemaDataType.Object:
-				return this.SetObject(SchemaDataType.String);  // TODO Set valuesType dynamically
+				return this.SetObject(schema.Items);
 
 			case SchemaDataType.Integer:
 				throw new NotImplementedException();
@@ -91,8 +92,15 @@ public abstract class ElementsContainerBase : Control, IValueEditorNode, ISchema
 		return editorNode;
 	}
 
-	private IValueEditorNode SetObject(SchemaDataType valuesType)
+	private IValueEditorNode SetObject(Schema valuesSchema)
 	{
-		throw new NotImplementedException();
+		ObjectValueEditor editorNode = ObjectEditor.Instance<ObjectValueEditor>();
+
+		editorNode.ItemsSchema = valuesSchema;
+
+		editorNode.SizeFlagsHorizontal = (int)SizeFlags.ExpandFill;
+		editorNode.SizeFlagsVertical = (int)SizeFlags.ExpandFill;
+
+		return editorNode;
 	}
 }

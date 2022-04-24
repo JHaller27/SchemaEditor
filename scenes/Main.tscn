@@ -127,11 +127,12 @@ margin_left = -193.0
 margin_top = -179.0
 margin_right = 193.0
 margin_bottom = 179.0
+rect_min_size = Vector2( 400, 140 )
 resizable = true
 access = 2
 filters = PoolStringArray( "*.json ; JSON files" )
-current_dir = "/home/james/Documents/godot/SchemaEditor"
-current_path = "/home/james/Documents/godot/SchemaEditor/"
+current_dir = "/Users/james.ERDOS/Documents/godot/SchemaEditor"
+current_path = "/Users/james.ERDOS/Documents/godot/SchemaEditor/"
 
 [node name="UrlDialog" parent="." instance=ExtResource( 1 )]
 anchor_left = 0.5
@@ -142,6 +143,7 @@ margin_left = -182.0
 margin_top = -43.0
 margin_right = 182.0
 margin_bottom = 43.0
+rect_min_size = Vector2( 400, 140 )
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
@@ -151,5 +153,4 @@ margin_bottom = 43.0
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Header/ValueControlsContainer/ImportButton" to="." method="_on_ImportButton_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Header/ValueControlsContainer/ExportButton" to="." method="_on_ExportButton_pressed"]
 [connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]
-[connection signal="UrlSelected" from="UrlDialog" to="." method="_on_UrlDialog_UrlSelected"]
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]
